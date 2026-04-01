@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+    
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -8,7 +9,7 @@
   * { box-sizing: border-box; }
   body { max-width: 780px; margin: 0 auto; padding: 24px 20px 80px;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-          color: #1a1a1a; background: #f7f7f5; }
+          color: #1a1a1a; background: #f7f7f5; font-size: 16px; }
   .back { font-size: 13px; color: #888; text-decoration: none;
            display: inline-flex; align-items: center; gap: 4px; margin-bottom: 24px; }
   .back:hover { color: #333; }
@@ -17,8 +18,10 @@
   .hero p { color: rgba(255,255,255,0.6); font-size: 14px; margin: 0; line-height: 1.8; }
   .card { background: #fff; border: 0.5px solid #e8e8e8; border-radius: 14px;
            padding: 22px 24px; margin-bottom: 14px; }
-  .card-title { font-size: 11px; font-weight: 600; color: #aaa;
+  .card-title { font-size: 13px; font-weight: 600; color: #aaa;
                  letter-spacing: 0.07em; text-transform: uppercase; margin: 0 0 14px; }
+  .step-detail p { margin: 0 0 8px; line-height: 1.9; font-size: 15px; color: #444; }
+  .step-detail p:last-child { margin-bottom: 0; }               
   .meta-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 14px; }
   .meta-box { background: #f8f8f8; border-radius: 10px; padding: 14px; text-align: center; }
   .meta-box-label { font-size: 11px; color: #aaa; margin: 0 0 6px; }
@@ -33,7 +36,7 @@
 
   <div class="hero">
     <h1>Claude Cowork로 카드뉴스 자동 생성하기</h1>
-    <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0;line-height:1.8;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">SNS 카드뉴스, 매번 만들 때마다 시간이 너무 많이 걸리지 않나요? 캔바 열고, 텍스트 정리하고, 디자인 맞추고, 이미지 찾고... 하나 만드는 데 1~2시간은 기본이잖아요. 특히 정기적으로 올려야 하는 콘텐츠라면 이게 정말 큰 부담이 됩니다.</p>
+    <p style="color:rgba(255,255,255,0.65);font-size:15px;margin:0;line-height:1.9;">SNS 카드뉴스, 매번 만들 때마다 시간이 너무 많이 걸리지 않나요? 캔바 열고, 텍스트 정리하고, 디자인 맞추고, 이미지 찾고...<br>하나 만드는 데 1~2시간은 기본이잖아요.<br>특히 정기적으로 올려야 하는 콘텐츠라면 이게 정말 큰 부담이 됩니다.</p>
   </div>
 
   <div class="meta-grid">
@@ -92,7 +95,9 @@
                            background:#E1F5EE;color:#085041">설정</span>
               <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Figma에서 카드뉴스 템플릿 만들기</span>
             </div>
-            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">Figma에 로그인한 후 New design file을 클릭해 새 파일을 만들어요. 왼쪽 상단 + 버튼을 눌러 Frame을 추가하고, 사이즈를 1080x1080으로 설정하면 인스타그램 정사각형 비율이 됩니다. 여기에 제목 텍스트 박스, 본문 텍스트 박스, 배경 색상을 배치해요. 핵심은 AI가 채울 텍스트 박스에 이름을 명확하게 지정하는 거예요. 텍스트 박스를 클릭하고 오른쪽 레이어 패널에서 이름을 '제목', '본문1', '본문2'처럼 알아보기 쉽게 바꿔주세요.</p>
+            <div class="step-detail">
+              <p>Figma에 로그인한 후 New design file을 클릭해 새 파일을 만들어요.</p><p>왼쪽 상단 + 버튼을 눌러 Frame을 추가하고, 사이즈를 1080x1080으로 설정하면 인스타그램 정사각형 비율이 됩니다.</p><p>여기에 제목 텍스트 박스, 본문 텍스트 박스, 배경 색상을 배치해요.</p><p>핵심은 AI가 채울 텍스트 박스에 이름을 명확하게 지정하는 거예요.</p><p>텍스트 박스를 클릭하고 오른쪽 레이어 패널에서 이름을 '제목', '본문1', '본문2'처럼 알아보기 쉽게 바꿔주세요.</p>
+            </div>
             
             <div style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:8px;border:1px dashed #ddd;text-align:center;font-size:11px;color:#bbb;">이미지를 추가하려면 sample_data.json의 steps[0].image에 이미지 URL 또는 파일명을 입력하세요</div>
           </div>
@@ -110,7 +115,9 @@
                            background:#E1F5EE;color:#085041">설정</span>
               <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Figma에서 공유 링크 복사하기</span>
             </div>
-            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">템플릿 완성 후 오른쪽 상단 Share 버튼을 클릭해요. 팝업창에서 'Anyone with the link'를 'can edit'으로 설정하고 Copy link를 클릭해요. 이 링크가 Claude Cowork와 연결할 때 필요한 주소예요.</p>
+            <div class="step-detail">
+              <p>템플릿 완성 후 오른쪽 상단 Share 버튼을 클릭해요.</p><p>팝업창에서 'Anyone with the link'를 'can edit'으로 설정하고 Copy link를 클릭해요.</p><p>이 링크가 Claude Cowork와 연결할 때 필요한 주소예요.</p>
+            </div>
             
             <div style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:8px;border:1px dashed #ddd;text-align:center;font-size:11px;color:#bbb;">이미지를 추가하려면 sample_data.json의 steps[1].image에 이미지 URL 또는 파일명을 입력하세요</div>
           </div>
@@ -128,7 +135,9 @@
                            background:#FAEEDA;color:#633806">연동</span>
               <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Claude Cowork에서 Figma 연결하기</span>
             </div>
-            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">claude.ai에 로그인한 후 왼쪽 메뉴에서 Cowork를 클릭해요. 새 Cowork 세션을 시작하면 채팅창이 열려요. 여기서 도구 연결 버튼을 찾아 Figma를 선택해요. Figma 계정으로 로그인하는 팝업이 뜨면 허용을 눌러주세요.</p>
+            <div class="step-detail">
+              <p>claude.</p><p>ai에 로그인한 후 왼쪽 메뉴에서 Cowork를 클릭해요.</p><p>새 Cowork 세션을 시작하면 채팅창이 열려요.</p><p>여기서 도구 연결 버튼을 찾아 Figma를 선택해요.</p><p>Figma 계정으로 로그인하는 팝업이 뜨면 허용을 눌러주세요.</p>
+            </div>
             
             <div style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:8px;border:1px dashed #ddd;text-align:center;font-size:11px;color:#bbb;">이미지를 추가하려면 sample_data.json의 steps[2].image에 이미지 URL 또는 파일명을 입력하세요</div>
           </div>
@@ -146,7 +155,9 @@
                            background:#E6F1FB;color:#0C447C">AI</span>
               <span style="font-size:15px;font-weight:500;color:#1a1a1a;">템플릿 링크와 주제 전달하기</span>
             </div>
-            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">Claude Cowork 채팅창에 아까 복사한 Figma 링크와 함께 만들고 싶은 카드뉴스 주제를 입력해요. 슬라이드 장 수, 타깃 독자, 원하는 톤까지 함께 알려주면 더 정확하게 작업해줘요. Claude가 Figma 파일을 읽고 레이어 구조를 파악한 다음 각 텍스트 박스에 내용을 채우기 시작해요.</p>
+            <div class="step-detail">
+              <p>Claude Cowork 채팅창에 아까 복사한 Figma 링크와 함께 만들고 싶은 카드뉴스 주제를 입력해요.</p><p>슬라이드 장 수, 타깃 독자, 원하는 톤까지 함께 알려주면 더 정확하게 작업해줘요.</p><p>Claude가 Figma 파일을 읽고 레이어 구조를 파악한 다음 각 텍스트 박스에 내용을 채우기 시작해요.</p>
+            </div>
             
             <div style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:8px;border:1px dashed #ddd;text-align:center;font-size:11px;color:#bbb;">이미지를 추가하려면 sample_data.json의 steps[3].image에 이미지 URL 또는 파일명을 입력하세요</div>
           </div>
@@ -164,16 +175,18 @@
                            background:#F1EFE8;color:#5F5E5A">테스트</span>
               <span style="font-size:15px;font-weight:500;color:#1a1a1a;">결과물 확인 및 수정 요청하기</span>
             </div>
-            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">Claude가 작업을 완료하면 Figma 파일이 자동으로 업데이트돼요. Figma를 새로고침하면 각 텍스트 박스에 내용이 채워진 걸 확인할 수 있어요. 마음에 안 드는 부분이 있으면 채팅창에 바로 수정 요청을 하면 돼요.</p>
+            <div class="step-detail">
+              <p>Claude가 작업을 완료하면 Figma 파일이 자동으로 업데이트돼요.</p><p>Figma를 새로고침하면 각 텍스트 박스에 내용이 채워진 걸 확인할 수 있어요.</p><p>마음에 안 드는 부분이 있으면 채팅창에 바로 수정 요청을 하면 돼요.</p>
+            </div>
             
             <div style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:8px;border:1px dashed #ddd;text-align:center;font-size:11px;color:#bbb;">이미지를 추가하려면 sample_data.json의 steps[4].image에 이미지 URL 또는 파일명을 입력하세요</div>
           </div>
         </div></div>
   </div>
 
-  <div class="card">
-    <p class="card-title">✅ 완성하면 이렇게 돼요</p>
-    <div class="result-box">주제 하나를 던지면 10분 안에 완성된 카드뉴스 5장이 Figma에 준비돼요. 기존에 장당 20~30분 걸리던 작업이 전체 합쳐서 10분으로 줄어요.</div>
+  <div style="background:#1a1a2e;border-radius:14px;padding:28px 28px 24px;margin-bottom:14px;">
+    <p style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;margin:0 0 16px;">✅ 완성하면 이렇게 돼요</p>
+    <p style="font-size:18px;font-weight:500;color:#fff;line-height:1.8;margin:0;">주제 하나를 던지면 10분 안에 완성된 카드뉴스 5장이 Figma에 준비돼요. 기존에 장당 20~30분 걸리던 작업이 전체 합쳐서 10분으로 줄어요.</p>
   </div>
 
   <div class="card">
