@@ -33,13 +33,13 @@
 
   <div class="hero">
     <h1>테스트: n8n으로 이메일 자동 분류하기</h1>
-    <p>매일 아침 업무 관련 이메일을 하나하나 열어보고 중요한 것만 골라내는 데 시간을 너무 많이 쓰고 계신가요?</p>
+    <p>SNS 카드뉴스, 매번 만들 때마다 시간이 너무 많이 걸리지 않나요? 캔바 열고, 텍스트 정리하고, 디자인 맞추고, 이미지 찾고... 하나 만드는 데 1~2시간은 기본이잖아요. 특히 정기적으로 올려야 하는 콘텐츠라면 이게 정말 큰 부담이 됩니다.</p>
   </div>
 
   <div class="meta-grid">
     <div class="meta-box">
       <p class="meta-box-label">⏱ 소요시간</p>
-      <p class="meta-box-value" style="font-size:14px;">약 30분</p>
+      <p class="meta-box-value" style="font-size:14px;">처음 세팅 기준 약 30분 (Figma 템플릿 만드는 게 제일 오래 걸리고, 연동 자체는 5분이에요)</p>
     </div>
     <div class="meta-box">
       <p class="meta-box-label">📊 난이도</p>
@@ -47,13 +47,13 @@
     </div>
     <div class="meta-box">
       <p class="meta-box-label">🔧 필요 툴</p>
-      <p class="meta-box-value" style="font-size:12px;">n8n, Gmail, Claude API</p>
+      <p class="meta-box-value" style="font-size:12px;">Claude Cowork, Figma, Claude API</p>
     </div>
   </div>
 
   <div class="card">
     <p class="card-title">✨ 이렇게 해결할 수 있어요</p>
-    <p style="font-size:13px;color:#444;line-height:1.8;margin:0;">n8n과 AI를 연결하면 이메일이 오는 순간 자동으로 분류하고 중요한 것만 알림을 보내줘요.</p>
+    <p style="font-size:13px;color:#444;line-height:1.8;margin:0;">Claude Cowork의 Figma 연동 기능을 쓰면, 미리 만들어둔 카드뉴스 템플릿에 AI가 자동으로 내용을 채워줘요. 주제만 던져주면 텍스트 작성부터 슬롯 채우기까지 자동으로 처리되는 방식이에요.</p>
   </div>
 
   <div class="card">
@@ -61,19 +61,19 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <div style="background:#fff5f5;border-radius:10px;padding:16px;">
         <p style="font-size:11px;font-weight:600;color:#c0392b;margin:0 0 8px;">😩 자동화 전</p>
-        <p style="font-size:13px;color:#444;line-height:1.7;margin:0;">매일 아침 30분씩 이메일함을 열어 하나씩 확인하고 중요한 것만 따로 정리</p>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0;">주제 정하기 → 내용 직접 작성 → 캔바/Figma 열기 → 텍스트 하나씩 복붙 → 디자인 조정 → 이미지 검색 → 최종 확인까지 1~2시간 소요</p>
       </div>
       <div style="background:#f0fff4;border-radius:10px;padding:16px;">
         <p style="font-size:11px;font-weight:600;color:#27ae60;margin:0 0 8px;">🚀 자동화 후</p>
-        <p style="font-size:13px;color:#444;line-height:1.7;margin:0;">중요한 이메일만 슬랙으로 자동 알림, 나머지는 자동 분류 완료</p>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0;">Claude Cowork에 주제 입력 → AI가 Figma 템플릿에 자동으로 내용 채움 → 결과물 확인 후 바로 다운로드. 10분 컷</p>
       </div>
     </div>
   </div>
 
   <div class="card">
     <p class="card-title">🛠 사전 준비</p>
-    <span style="display:inline-block;font-size:12px;padding:5px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">n8n</span><span style="display:inline-block;font-size:12px;padding:5px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">Gmail</span><span style="display:inline-block;font-size:12px;padding:5px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">Claude API</span>
-    <ul style='margin-top:14px;padding-left:18px;'><li style="font-size:13px;color:#444;line-height:1.8;margin:3px 0;">n8n 계정 (무료로 가입 가능)</li><li style="font-size:13px;color:#444;line-height:1.8;margin:3px 0;">Gmail 계정</li><li style="font-size:13px;color:#444;line-height:1.8;margin:3px 0;">Claude API 키 (anthropic.com에서 발급)</li></ul>
+    <span style="display:inline-block;font-size:12px;padding:5px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">Claude Cowork</span><span style="display:inline-block;font-size:12px;padding:5px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">Figma</span><span style="display:inline-block;font-size:12px;padding:5px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">Claude API</span>
+    <ul style='margin-top:14px;padding-left:18px;'><li style="font-size:13px;color:#444;line-height:1.8;margin:3px 0;">Claude 계정 (claude.ai에서 무료 가입)</li><li style="font-size:13px;color:#444;line-height:1.8;margin:3px 0;">Claude Cowork 접근 권한 (claude.ai에서 Cowork 메뉴 확인)</li><li style="font-size:13px;color:#444;line-height:1.8;margin:3px 0;">Figma 계정 (figma.com에서 무료 가입, 이메일만 있으면 돼요)</li><li style="font-size:13px;color:#444;line-height:1.8;margin:3px 0;">Anthropic API 키 (console.anthropic.com에서 발급, 카드 등록 필요하지만 무료 크레딧 제공)</li></ul>
   </div>
 
   <div class="card">
@@ -82,26 +82,58 @@
         <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:4px;">
           <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
             <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
-                        justify-content:center;font-size:13px;font-weight:600;background:#EEEDFE;color:#3C3489">1</div>
+                        justify-content:center;font-size:13px;font-weight:600;background:#E1F5EE;color:#085041">1</div>
             <div style="width:2px;flex:1;min-height:28px;background:#e8e8e8;margin:4px 0;"></div>
           </div>
           <div style="flex:1;background:#fff;border:0.5px solid #e8e8e8;border-radius:12px;
                       padding:18px 20px;margin-bottom:4px;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
               <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;
-                           background:#EEEDFE;color:#3C3489">트리거</span>
-              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">n8n에서 새 워크플로우 만들기</span>
+                           background:#E1F5EE;color:#085041">설정</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Figma에서 카드뉴스 템플릿 만들기</span>
             </div>
-            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">n8n에 로그인한 후 오른쪽 상단의 '+ New Workflow' 버튼을 클릭해요. 빈 캔버스가 나타나면 왼쪽 패널에서 'Gmail' 을 검색해서 'Gmail Trigger' 노드를 드래그해서 가져다 놓아요. 이 노드가 새 이메일이 올 때마다 자동으로 시작하는 역할을 해요.</p>
-            <div style="margin-top:12px;padding:12px 14px;background:#fffbf0;
-                border-left:3px solid #f0c040;border-radius:0 8px 8px 0;
-                font-size:12px;color:#7a6000;line-height:1.7;">💡 Gmail 연동 시 구글 계정 로그인 팝업이 뜨면 허용을 눌러주세요.</div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">Figma에 로그인한 후 New design file을 클릭해 새 파일을 만들어요. 왼쪽 상단 + 버튼을 눌러 Frame을 추가하고, 사이즈를 1080x1080으로 설정하면 인스타그램 정사각형 비율이 됩니다. 여기에 제목 텍스트 박스, 본문 텍스트 박스, 배경 색상을 배치해요. 핵심은 AI가 채울 텍스트 박스에 이름을 명확하게 지정하는 거예요. 텍스트 박스를 클릭하고 오른쪽 레이어 패널에서 이름을 '제목', '본문1', '본문2'처럼 알아보기 쉽게 바꿔주세요.</p>
+            
           </div>
         </div>
         <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:4px;">
           <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
             <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
-                        justify-content:center;font-size:13px;font-weight:600;background:#E6F1FB;color:#0C447C">2</div>
+                        justify-content:center;font-size:13px;font-weight:600;background:#E1F5EE;color:#085041">2</div>
+            <div style="width:2px;flex:1;min-height:28px;background:#e8e8e8;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;background:#fff;border:0.5px solid #e8e8e8;border-radius:12px;
+                      padding:18px 20px;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;
+                           background:#E1F5EE;color:#085041">설정</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Figma에서 공유 링크 복사하기</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">템플릿 완성 후 오른쪽 상단 Share 버튼을 클릭해요. 팝업창에서 'Anyone with the link'를 'can edit'으로 설정하고 Copy link를 클릭해요. 이 링크가 Claude Cowork와 연결할 때 필요한 주소예요. 링크는 https://www.figma.com/file/로 시작하는 형태예요.</p>
+            
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:4px;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+                        justify-content:center;font-size:13px;font-weight:600;background:#FAEEDA;color:#633806">3</div>
+            <div style="width:2px;flex:1;min-height:28px;background:#e8e8e8;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;background:#fff;border:0.5px solid #e8e8e8;border-radius:12px;
+                      padding:18px 20px;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;
+                           background:#FAEEDA;color:#633806">연동</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Claude Cowork에서 Figma 연결하기</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">claude.ai에 로그인한 후 왼쪽 메뉴에서 Cowork를 클릭해요. 새 Cowork 세션을 시작하면 채팅창이 열려요. 여기서 '도구 연결' 또는 'Connect tools' 버튼을 찾아 Figma를 선택해요. Figma 계정으로 로그인하는 팝업이 뜨면 허용을 눌러주세요. 연결이 완료되면 채팅창에 Figma 아이콘이 활성화된 걸 확인할 수 있어요.</p>
+            
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:4px;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+                        justify-content:center;font-size:13px;font-weight:600;background:#E6F1FB;color:#0C447C">4</div>
             <div style="width:2px;flex:1;min-height:28px;background:#e8e8e8;margin:4px 0;"></div>
           </div>
           <div style="flex:1;background:#fff;border:0.5px solid #e8e8e8;border-radius:12px;
@@ -109,28 +141,26 @@
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
               <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;
                            background:#E6F1FB;color:#0C447C">AI</span>
-              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">AI에게 이메일 분류 맡기기</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">템플릿 링크와 주제 전달하기</span>
             </div>
-            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">캔버스에 'HTTP Request' 노드를 추가하고 Claude API 주소를 입력해요. Body에는 이메일 제목과 내용을 넣고 '이 이메일의 중요도를 긴급/일반/참고 중 하나로 분류해줘'라고 지시문을 작성해요.</p>
-            <div style="margin-top:12px;padding:12px 14px;background:#fffbf0;
-                border-left:3px solid #f0c040;border-radius:0 8px 8px 0;
-                font-size:12px;color:#7a6000;line-height:1.7;">💡 API 키는 절대 코드에 직접 쓰지 말고 n8n의 Credentials 기능을 사용해서 안전하게 저장하세요.</div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">Claude Cowork 채팅창에 아까 복사한 Figma 링크와 함께 만들고 싶은 카드뉴스 주제를 입력해요. 프롬프트는 최대한 구체적으로 쓸수록 결과물이 좋아요. 슬라이드 장 수, 타깃 독자, 원하는 톤까지 함께 알려주면 더 정확하게 작업해줘요. Claude가 Figma 파일을 읽고 레이어 구조를 파악한 다음 각 텍스트 박스에 내용을 채우기 시작해요.</p>
+            
           </div>
         </div>
         <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:4px;">
           <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
             <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
-                        justify-content:center;font-size:13px;font-weight:600;background:#FAECE7;color:#993C1D">3</div>
+                        justify-content:center;font-size:13px;font-weight:600;background:#F1EFE8;color:#5F5E5A">5</div>
             
           </div>
           <div style="flex:1;background:#fff;border:0.5px solid #e8e8e8;border-radius:12px;
                       padding:18px 20px;margin-bottom:4px;">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
               <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;
-                           background:#FAECE7;color:#993C1D">조건</span>
-              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">결과에 따라 다르게 처리하기</span>
+                           background:#F1EFE8;color:#5F5E5A">테스트</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">결과물 확인 및 수정 요청하기</span>
             </div>
-            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">'IF' 노드를 추가해서 AI가 '긴급'이라고 답한 경우와 아닌 경우를 나눠요. 긴급인 경우에는 Slack 노드를 연결해서 즉시 알림을 보내고, 나머지는 Gmail 노드로 라벨만 붙여요.</p>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">Claude가 작업을 완료하면 Figma 파일이 자동으로 업데이트돼요. Figma를 새로고침하면 각 텍스트 박스에 내용이 채워진 걸 확인할 수 있어요. 마음에 안 드는 부분이 있으면 Claude Cowork 채팅창에 바로 수정 요청을 하면 돼요. '3번 슬라이드 내용을 더 쉽게 바꿔줘'처럼 자연어로 요청하면 바로 반영해줘요.</p>
             
           </div>
         </div></div>
@@ -138,7 +168,43 @@
 
   <div class="card">
     <p class="card-title">✅ 완성하면 이렇게 돼요</p>
-    <div class="result-box">이제 이메일이 오면 AI가 자동으로 읽고 분류해요. 긴급한 것만 슬랙으로 알림이 오고, 나머지는 자동으로 정리돼요. 아침에 이메일함을 일일이 확인할 필요가 없어져요.</div>
+    <div class="result-box">주제 하나를 던지면 10분 안에 완성된 카드뉴스 5장이 Figma에 준비돼요. 기존에 장당 20~30분 걸리던 작업이 전체 합쳐서 10분으로 줄어요. 매주 SNS 콘텐츠 제작에 쏟던 3~4시간을 다른 업무에 쓸 수 있게 됩니다.</div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">💰 비용 정보</p>
+    <p style="font-size:13px;color:#444;line-height:1.8;margin:0;">Claude Cowork는 현재 베타로 무료 사용 가능해요. Figma는 무료 플랜으로도 충분하고, Claude API는 사용량에 따라 과금되지만 카드뉴스 몇 장 만드는 수준이면 한 달에 $1~2 수준이에요.</p>
+  </div>
+
+  <div class="card">
+    <p class="card-title">👥 실제 활용 사례</p>
+    <ul style="padding-left:18px;margin:0;">
+      <li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">마케터라면 매주 브랜드 SNS에 올릴 정보성 콘텐츠를 이 방식으로 빠르게 만들 수 있어요. 주제만 바꿔가며 반복 생산이 가능해요.</li><li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">교육 담당자라면 사내 교육 자료나 공지사항을 카드뉴스 형태로 빠르게 제작해 임직원에게 공유할 수 있어요.</li><li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">1인 창업자나 프리랜서라면 포트폴리오 소개, 서비스 안내 카드뉴스를 직접 빠르게 만들어 비용을 절약할 수 있어요.</li>
+    </ul>
+  </div>
+
+  <div class="card"><p class="card-title">⚠️ 자주 하는 실수</p><div style="margin-bottom:14px;padding:14px 16px;background:#fff8f8;border-radius:10px;border-left:3px solid #ffaaaa;">
+      <p style="font-size:12px;font-weight:600;color:#c0392b;margin:0 0 4px;">문제 상황</p>
+      <p style="font-size:13px;color:#444;margin:0 0 8px;line-height:1.7;">Claude가 Figma 레이어를 못 찾겠다고 해요.</p>
+      <p style="font-size:12px;font-weight:600;color:#27ae60;margin:0 0 4px;">해결법</p>
+      <p style="font-size:13px;color:#444;margin:0;line-height:1.7;">레이어 이름이 한글이거나 특수문자가 포함된 경우예요. 영문 소문자로 title, body, subtitle처럼 단순하게 바꿔주세요.</p>
+    </div><div style="margin-bottom:14px;padding:14px 16px;background:#fff8f8;border-radius:10px;border-left:3px solid #ffaaaa;">
+      <p style="font-size:12px;font-weight:600;color:#c0392b;margin:0 0 4px;">문제 상황</p>
+      <p style="font-size:13px;color:#444;margin:0 0 8px;line-height:1.7;">내용은 채워졌는데 Figma에서 텍스트가 박스를 넘쳐 보여요.</p>
+      <p style="font-size:12px;font-weight:600;color:#27ae60;margin:0 0 4px;">해결법</p>
+      <p style="font-size:13px;color:#444;margin:0;line-height:1.7;">Figma에서 해당 텍스트 박스를 선택하고 오른쪽 패널에서 Text를 Auto height로 설정하면 내용에 맞게 자동 조정돼요.</p>
+    </div><div style="margin-bottom:14px;padding:14px 16px;background:#fff8f8;border-radius:10px;border-left:3px solid #ffaaaa;">
+      <p style="font-size:12px;font-weight:600;color:#c0392b;margin:0 0 4px;">문제 상황</p>
+      <p style="font-size:13px;color:#444;margin:0 0 8px;line-height:1.7;">카드뉴스 내용이 너무 딱딱하고 AI 같아요.</p>
+      <p style="font-size:12px;font-weight:600;color:#27ae60;margin:0 0 4px;">해결법</p>
+      <p style="font-size:13px;color:#444;margin:0;line-height:1.7;">프롬프트에 톤을 명시해주세요. '20대 직장인 친구에게 말하듯이', '유머를 약간 섞어서'처럼 구체적인 스타일을 지정하면 훨씬 자연스러워져요.</p>
+    </div></div>
+
+  <div class="card">
+    <p class="card-title">💡 이런 상황에도 써보세요</p>
+    <ul style="padding-left:18px;margin:0;">
+      <li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">카드뉴스 말고 회사 주간 보고서 템플릿을 만들어두면, 매주 데이터만 넣어서 보고서를 자동 완성할 수 있어요.</li><li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">제품 소개 슬라이드 템플릿을 만들어두면 신제품 출시할 때마다 Claude에게 스펙만 전달하면 발표 자료가 자동 완성돼요.</li><li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">이벤트 배너 템플릿을 여러 사이즈로 만들어두면 한 번 요청으로 인스타, 페이스북, 유튜브 썸네일용 배너를 동시에 만들 수 있어요.</li>
+    </ul>
   </div>
 
   <div class="card">
