@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Cowork로 카드뉴스 자동 생성하기</title>
+<style>
+  * { box-sizing: border-box; }
+  body { max-width: 780px; margin: 0 auto; padding: 24px 20px 80px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          color: #1a1a1a; background: #f7f7f5; }
+  .back { font-size: 13px; color: #888; text-decoration: none;
+           display: inline-flex; align-items: center; gap: 4px; margin-bottom: 24px; }
+  .back:hover { color: #333; }
+  .hero { background: #1a1a2e; border-radius: 16px; padding: 36px 32px; margin-bottom: 24px; }
+  .hero h1 { color: #fff; font-size: 22px; font-weight: 600; margin: 0 0 12px; line-height: 1.5; }
+  .hero p { color: rgba(255,255,255,0.6); font-size: 14px; margin: 0; line-height: 1.8; }
+  .card { background: #fff; border: 0.5px solid #e8e8e8; border-radius: 14px;
+           padding: 22px 24px; margin-bottom: 14px; }
+  .card-title { font-size: 11px; font-weight: 600; color: #aaa;
+                 letter-spacing: 0.07em; text-transform: uppercase; margin: 0 0 14px; }
+  .meta-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 14px; }
+  .meta-box { background: #f8f8f8; border-radius: 10px; padding: 14px; text-align: center; }
+  .meta-box-label { font-size: 11px; color: #aaa; margin: 0 0 6px; }
+  .meta-box-value { font-size: 16px; font-weight: 600; color: #1a1a2e; margin: 0; }
+  .result-box { background: linear-gradient(135deg, #f0f7ff, #e8f4ff);
+                 border-radius: 10px; padding: 16px 18px;
+                 font-size:13px; color:#1a4a7a; line-height:1.8; }
+</style>
+</head>
+<body>
+  <a class="back" href="index.html">← 목록으로</a>
+
+  <div class="hero">
+    <h1>Claude Cowork로 카드뉴스 자동 생성하기</h1>
+    <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0;line-height:1.8;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">SNS 카드뉴스, 매번 만들 때마다 시간이 너무 많이 걸리지 않나요? 캔바 열고, 텍스트 정리하고, 디자인 맞추고, 이미지 찾고... 하나 만드는 데 1~2시간은 기본이잖아요. 특히 정기적으로 올려야 하는 콘텐츠라면 이게 정말 큰 부담이 됩니다.</p>
+  </div>
+
+  <div class="meta-grid">
+    <div class="meta-box">
+      <p class="meta-box-label">⏱ 소요시간</p>
+      <p class="meta-box-value" style="font-size:14px;">약 30분</p>
+    </div>
+    <div class="meta-box">
+      <p class="meta-box-label">📊 난이도</p>
+      <p class="meta-box-value" style="font-size:14px;color:#27ae60;">초급</p>
+    </div>
+    <div class="meta-box">
+      <p class="meta-box-label">🔧 필요 툴</p>
+      <p class="meta-box-value" style="font-size:12px;">Claude Cowork, Figma, Claude API</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">✨ 이렇게 해결할 수 있어요</p>
+    <p style="font-size:13px;color:#444;line-height:1.8;margin:0;">Claude Cowork의 Figma 연동 기능을 쓰면, 미리 만들어둔 카드뉴스 템플릿에 AI가 자동으로 내용을 채워줘요. 주제만 던져주면 텍스트 작성부터 슬롯 채우기까지 자동으로 처리되는 방식이에요.</p>
+  </div>
+
+  <div class="card">
+    <p class="card-title">📊 자동화 전 vs 후</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff5f5;border-radius:10px;padding:16px;">
+        <p style="font-size:11px;font-weight:600;color:#c0392b;margin:0 0 8px;">😩 자동화 전</p>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0;">주제 정하기 <br>→ 내용 직접 작성 <br>→ 캔바/Figma 열기 <br>→ 텍스트 하나씩 복붙 <br>→ 디자인 조정 <br>→ 이미지 검색 <br>→ 최종 확인까지 1~2시간 소요</p>
+      </div>
+      <div style="background:#f0fff4;border-radius:10px;padding:16px;">
+        <p style="font-size:11px;font-weight:600;color:#27ae60;margin:0 0 8px;">🚀 자동화 후</p>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0;">Claude Cowork에 주제 입력 <br>→ AI가 Figma 템플릿에 자동으로 내용 채움 <br>→ 결과물 확인 후 바로 다운로드. 10분 컷</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">🛠 사전 준비</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;"><span style="font-size:12px;padding:5px 12px;border-radius:20px;background:#f0f0f0;color:#444;">Claude Cowork</span><span style="font-size:12px;padding:5px 12px;border-radius:20px;background:#f0f0f0;color:#444;">Figma</span><span style="font-size:12px;padding:5px 12px;border-radius:20px;background:#f0f0f0;color:#444;">Claude API</span></div>
+    <ul style='margin-top:14px;padding-left:18px;'><li style="font-size:13px;color:#444;line-height:1.8;margin:6px 0;"><a href="https://claude.ai" target="_blank" style="color:#185FA5;font-weight:500;text-decoration:none;">Claude 계정</a> — 무료 가입 가능</li><li style="font-size:13px;color:#444;line-height:1.8;margin:6px 0;"><a href="https://claude.ai" target="_blank" style="color:#185FA5;font-weight:500;text-decoration:none;">Claude Cowork 접근</a> — claude.ai에서 Cowork 메뉴 확인</li><li style="font-size:13px;color:#444;line-height:1.8;margin:6px 0;"><a href="https://figma.com" target="_blank" style="color:#185FA5;font-weight:500;text-decoration:none;">Figma 계정</a> — 무료 가입, 이메일만 있으면 돼요</li><li style="font-size:13px;color:#444;line-height:1.8;margin:6px 0;"><a href="https://console.anthropic.com" target="_blank" style="color:#185FA5;font-weight:500;text-decoration:none;">Anthropic API 키</a> — 카드 등록 필요하지만 무료 크레딧 제공</li></ul>
+  </div>
+
+  <div class="card">
+    <p class="card-title">📋 단계별 구현</p>
+    <div>
+        <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:4px;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+                        justify-content:center;font-size:13px;font-weight:600;background:#E1F5EE;color:#085041">1</div>
+            <div style="width:2px;flex:1;min-height:28px;background:#e8e8e8;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;background:#fff;border:0.5px solid #e8e8e8;border-radius:12px;
+                      padding:18px 20px;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;
+                           background:#E1F5EE;color:#085041">설정</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Figma에서 카드뉴스 템플릿 만들기</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">Figma에 로그인한 후 New design file을 클릭해 새 파일을 만들어요. 왼쪽 상단 + 버튼을 눌러 Frame을 추가하고, 사이즈를 1080x1080으로 설정하면 인스타그램 정사각형 비율이 됩니다. 여기에 제목 텍스트 박스, 본문 텍스트 박스, 배경 색상을 배치해요. 핵심은 AI가 채울 텍스트 박스에 이름을 명확하게 지정하는 거예요. 텍스트 박스를 클릭하고 오른쪽 레이어 패널에서 이름을 '제목', '본문1', '본문2'처럼 알아보기 쉽게 바꿔주세요.</p>
+            
+            <div style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:8px;border:1px dashed #ddd;text-align:center;font-size:11px;color:#bbb;">이미지를 추가하려면 sample_data.json의 steps[0].image에 이미지 URL 또는 파일명을 입력하세요</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:4px;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+                        justify-content:center;font-size:13px;font-weight:600;background:#E1F5EE;color:#085041">2</div>
+            <div style="width:2px;flex:1;min-height:28px;background:#e8e8e8;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;background:#fff;border:0.5px solid #e8e8e8;border-radius:12px;
+                      padding:18px 20px;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;
+                           background:#E1F5EE;color:#085041">설정</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Figma에서 공유 링크 복사하기</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">템플릿 완성 후 오른쪽 상단 Share 버튼을 클릭해요. 팝업창에서 'Anyone with the link'를 'can edit'으로 설정하고 Copy link를 클릭해요. 이 링크가 Claude Cowork와 연결할 때 필요한 주소예요.</p>
+            
+            <div style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:8px;border:1px dashed #ddd;text-align:center;font-size:11px;color:#bbb;">이미지를 추가하려면 sample_data.json의 steps[1].image에 이미지 URL 또는 파일명을 입력하세요</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:4px;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+                        justify-content:center;font-size:13px;font-weight:600;background:#FAEEDA;color:#633806">3</div>
+            <div style="width:2px;flex:1;min-height:28px;background:#e8e8e8;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;background:#fff;border:0.5px solid #e8e8e8;border-radius:12px;
+                      padding:18px 20px;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;
+                           background:#FAEEDA;color:#633806">연동</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Claude Cowork에서 Figma 연결하기</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">claude.ai에 로그인한 후 왼쪽 메뉴에서 Cowork를 클릭해요. 새 Cowork 세션을 시작하면 채팅창이 열려요. 여기서 도구 연결 버튼을 찾아 Figma를 선택해요. Figma 계정으로 로그인하는 팝업이 뜨면 허용을 눌러주세요.</p>
+            
+            <div style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:8px;border:1px dashed #ddd;text-align:center;font-size:11px;color:#bbb;">이미지를 추가하려면 sample_data.json의 steps[2].image에 이미지 URL 또는 파일명을 입력하세요</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:4px;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+                        justify-content:center;font-size:13px;font-weight:600;background:#E6F1FB;color:#0C447C">4</div>
+            <div style="width:2px;flex:1;min-height:28px;background:#e8e8e8;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;background:#fff;border:0.5px solid #e8e8e8;border-radius:12px;
+                      padding:18px 20px;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;
+                           background:#E6F1FB;color:#0C447C">AI</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">템플릿 링크와 주제 전달하기</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">Claude Cowork 채팅창에 아까 복사한 Figma 링크와 함께 만들고 싶은 카드뉴스 주제를 입력해요. 슬라이드 장 수, 타깃 독자, 원하는 톤까지 함께 알려주면 더 정확하게 작업해줘요. Claude가 Figma 파일을 읽고 레이어 구조를 파악한 다음 각 텍스트 박스에 내용을 채우기 시작해요.</p>
+            
+            <div style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:8px;border:1px dashed #ddd;text-align:center;font-size:11px;color:#bbb;">이미지를 추가하려면 sample_data.json의 steps[3].image에 이미지 URL 또는 파일명을 입력하세요</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:4px;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+                        justify-content:center;font-size:13px;font-weight:600;background:#F1EFE8;color:#5F5E5A">5</div>
+            
+          </div>
+          <div style="flex:1;background:#fff;border:0.5px solid #e8e8e8;border-radius:12px;
+                      padding:18px 20px;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;
+                           background:#F1EFE8;color:#5F5E5A">테스트</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">결과물 확인 및 수정 요청하기</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.9;">Claude가 작업을 완료하면 Figma 파일이 자동으로 업데이트돼요. Figma를 새로고침하면 각 텍스트 박스에 내용이 채워진 걸 확인할 수 있어요. 마음에 안 드는 부분이 있으면 채팅창에 바로 수정 요청을 하면 돼요.</p>
+            
+            <div style="margin-top:12px;padding:12px;background:#f8f8f8;border-radius:8px;border:1px dashed #ddd;text-align:center;font-size:11px;color:#bbb;">이미지를 추가하려면 sample_data.json의 steps[4].image에 이미지 URL 또는 파일명을 입력하세요</div>
+          </div>
+        </div></div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">✅ 완성하면 이렇게 돼요</p>
+    <div class="result-box">주제 하나를 던지면 10분 안에 완성된 카드뉴스 5장이 Figma에 준비돼요. 기존에 장당 20~30분 걸리던 작업이 전체 합쳐서 10분으로 줄어요.</div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">💰 비용 정보</p>
+    <p style="font-size:13px;color:#444;line-height:1.8;margin:0;">Claude Cowork는 현재 베타로 무료 사용 가능해요. Figma는 무료 플랜으로도 충분하고, Claude API는 사용량에 따라 과금되지만 카드뉴스 몇 장 만드는 수준이면 한 달에 $1~2 수준이에요.</p>
+  </div>
+
+  <div class="card">
+    <p class="card-title">👥 실제 활용 사례</p>
+    <ul style="padding-left:18px;margin:0;">
+      <li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">마케터라면 매주 브랜드 SNS에 올릴 정보성 콘텐츠를 이 방식으로 빠르게 만들 수 있어요.</li><li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">교육 담당자라면 사내 교육 자료나 공지사항을 카드뉴스 형태로 빠르게 제작해 공유할 수 있어요.</li><li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">1인 창업자나 프리랜서라면 포트폴리오 소개, 서비스 안내 카드뉴스를 직접 빠르게 만들어 비용을 절약할 수 있어요.</li>
+    </ul>
+  </div>
+
+  <div class="card"><p class="card-title">⚠️ 자주 하는 실수</p><div style="margin-bottom:14px;padding:14px 16px;background:#fff8f8;border-radius:10px;border-left:3px solid #ffaaaa;">
+      <p style="font-size:12px;font-weight:600;color:#c0392b;margin:0 0 4px;">문제 상황</p>
+      <p style="font-size:13px;color:#444;margin:0 0 8px;line-height:1.7;">Claude가 Figma 레이어를 못 찾겠다고 해요.</p>
+      <p style="font-size:12px;font-weight:600;color:#27ae60;margin:0 0 4px;">해결법</p>
+      <p style="font-size:13px;color:#444;margin:0;line-height:1.7;">레이어 이름이 한글이거나 특수문자가 포함된 경우예요. 영문 소문자로 title, body처럼 단순하게 바꿔주세요.</p>
+    </div><div style="margin-bottom:14px;padding:14px 16px;background:#fff8f8;border-radius:10px;border-left:3px solid #ffaaaa;">
+      <p style="font-size:12px;font-weight:600;color:#c0392b;margin:0 0 4px;">문제 상황</p>
+      <p style="font-size:13px;color:#444;margin:0 0 8px;line-height:1.7;">내용은 채워졌는데 텍스트가 박스를 넘쳐요.</p>
+      <p style="font-size:12px;font-weight:600;color:#27ae60;margin:0 0 4px;">해결법</p>
+      <p style="font-size:13px;color:#444;margin:0;line-height:1.7;">Figma에서 해당 텍스트 박스를 선택하고 Text를 Auto height로 설정하면 자동 조정돼요.</p>
+    </div><div style="margin-bottom:14px;padding:14px 16px;background:#fff8f8;border-radius:10px;border-left:3px solid #ffaaaa;">
+      <p style="font-size:12px;font-weight:600;color:#c0392b;margin:0 0 4px;">문제 상황</p>
+      <p style="font-size:13px;color:#444;margin:0 0 8px;line-height:1.7;">카드뉴스 내용이 너무 딱딱하고 AI 같아요.</p>
+      <p style="font-size:12px;font-weight:600;color:#27ae60;margin:0 0 4px;">해결법</p>
+      <p style="font-size:13px;color:#444;margin:0;line-height:1.7;">프롬프트에 톤을 명시해주세요. '20대 직장인 친구에게 말하듯이'처럼 구체적인 스타일을 지정하면 훨씬 자연스러워져요.</p>
+    </div></div>
+
+  <div class="card">
+    <p class="card-title">💡 이런 상황에도 써보세요</p>
+    <ul style="padding-left:18px;margin:0;">
+      <li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">회사 주간 보고서 템플릿을 만들어두면, 매주 데이터만 넣어서 보고서를 자동 완성할 수 있어요.</li><li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">제품 소개 슬라이드 템플릿을 만들어두면 신제품 출시할 때마다 발표 자료가 자동 완성돼요.</li><li style="font-size:13px;color:#444;line-height:1.9;margin:4px 0;">이벤트 배너 템플릿을 여러 사이즈로 만들어두면 한 번 요청으로 인스타, 페이스북, 유튜브 썸네일용 배너를 동시에 만들 수 있어요.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <p class="card-title">📎 참고한 원문</p>
+    <div><a href="https://blog.n8n.io/llm-agents/" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:0.5px solid #f0f0f0;text-decoration:none;color:inherit;"><span style="font-size:13px;color:#185FA5;flex:1;">n8n으로 LLM 에이전트 만들기 실전 가이드</span><span style="font-size:11px;color:#aaa;white-space:nowrap;">n8n Blog</span></a><a href="https://flowygo.com/en/blog/how-to-create-an-ai-agent-with-n8n-the-definitive-2025-guide/" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:0.5px solid #f0f0f0;text-decoration:none;color:inherit;"><span style="font-size:13px;color:#185FA5;flex:1;">n8n으로 AI 에이전트 만드는 완전 가이드 2025</span><span style="font-size:11px;color:#aaa;white-space:nowrap;">Flowygo</span></a><a href="https://strapi.io/blog/build-ai-agents-n8n" target="_blank" style="display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:0.5px solid #f0f0f0;text-decoration:none;color:inherit;"><span style="font-size:13px;color:#185FA5;flex:1;">n8n + LangChain으로 프로덕션 AI 에이전트 구축하기</span><span style="font-size:11px;color:#aaa;white-space:nowrap;">Strapi Blog</span></a></div>
+  </div>
+
+  <p style="text-align:center;font-size:12px;color:#ccc;margin-top:32px;">
+    생성일: 2026년 04월 01일 · AI가 여러 원문을 분석해 작성한 통합 가이드
+  </p>
+</body>
+</html>
