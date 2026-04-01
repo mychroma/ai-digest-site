@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>n8n으로 금융 업무 자동화 에이전트 구축하기</title>
+<style>
+  * { box-sizing: border-box; }
+  body { max-width: 740px; margin: 0 auto; padding: 24px 20px 60px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          color: #1a1a1a; background: #f7f7f5; }
+  .back { font-size: 13px; color: #888; text-decoration: none; display:inline-block; margin-bottom: 24px; }
+  .back:hover { color: #333; }
+  .header { background: #1a1a2e; border-radius: 14px; padding: 28px 28px 24px; margin-bottom: 28px; }
+  .header h1 { color: #fff; font-size: 20px; font-weight: 500; margin: 0 0 10px; line-height: 1.5; }
+  .header p { color: rgba(255,255,255,0.55); font-size: 13px; margin: 0; line-height: 1.7; }
+  .section { background: #fff; border-radius: 12px; border: 0.5px solid #e8e8e8; padding: 22px 24px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 600; color: #888; letter-spacing: 0.07em; text-transform: uppercase; margin: 0 0 14px; }
+  ul { padding-left: 18px; margin: 0; }
+  li { font-size: 13px; color: #444; line-height: 1.8; margin: 3px 0; }
+  .result-box { background: #f0f7ff; border-radius: 10px; padding: 14px 16px; font-size:13px; color:#1a4a7a; line-height:1.8; }
+  .footer { margin-top: 32px; padding-top: 20px; border-top: 0.5px solid #e0e0e0; font-size: 12px; color: #aaa; }
+  .footer a { color: #185FA5; text-decoration: none; }
+  .footer ul { list-style: none; padding: 0; margin: 10px 0 0; }
+  .footer li { margin: 5px 0; }
+</style>
+</head>
+<body>
+  <a class="back" href="index.html">← 목록으로</a>
+
+  <div class="header">
+    <h1>n8n으로 금융 업무 자동화 에이전트 구축하기</h1>
+    <p></p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+    <div class="section" style="margin:0;">
+      <p class="section-title">😤 이런 게 불편하지 않으셨나요?</p>
+      <p style="font-size:13px;color:#444;line-height:1.8;margin:0;">매일 수많은 금융 뉴스와 보고서를 직접 찾아 읽고, 중요한 내용을 요약해서 공유하는 데 많은 시간을 쓰고 계신가요? 핵심 정보를 놓치거나 분석에 오류가 생길까 봐 걱정되시나요? 이렇게 반복적이고 시간이 많이 드는 업무는 금세 지치게 만들 수 있습니다.</p>
+    </div>
+    <div class="section" style="margin:0;">
+      <p class="section-title">✨ 이렇게 해결할 수 있어요</p>
+      <p style="font-size:13px;color:#444;line-height:1.8;margin:0;">n8n이라는 '자동화 도구'와 AI (인공지능)를 활용하여, 금융 정보를 알아서 수집하고 분석해서 필요한 내용을 전달해주는 똑똑한 'AI 에이전트 (AI 비서)'를 만들 수 있습니다. 마치 나만의 전담 금융 비서를 고용하는 것처럼 업무 부담을 확 줄여줍니다.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-title">📊 자동화 전 vs 후</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="background:#fff5f5;border-radius:8px;padding:14px 16px;">
+        <p style="font-size:11px;font-weight:600;color:#c0392b;margin:0 0 6px;">😩 자동화 전</p>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0;">매일 아침 여러 금융 뉴스 사이트를 방문해서 관심 있는 기사를 직접 읽고, 중요 내용을 파악해 수동으로 요약해서 팀 채팅방에 공유하는 데 최소 30분 이상 소요됩니다.</p>
+      </div>
+      <div style="background:#f0fff4;border-radius:8px;padding:14px 16px;">
+        <p style="font-size:11px;font-weight:600;color:#27ae60;margin:0 0 6px;">🚀 자동화 후</p>
+        <p style="font-size:13px;color:#444;line-height:1.7;margin:0;">설정된 시간에 AI 에이전트가 최신 금융 뉴스들을 자동으로 수집하고, 핵심 내용을 요약해서 지정된 디스코드 채널에 자동으로 전송합니다. 저는 전송받은 요약본만 빠르게 확인하면 됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+    <div class="section" style="margin:0;text-align:center;">
+      <p class="section-title">⏱ 소요시간</p>
+      <p style="font-size:20px;font-weight:500;color:#1a1a2e;margin:0;">약 60분 (API 키 발급 및 계정 설정 시간 포함)</p>
+    </div>
+    <div class="section" style="margin:0;text-align:center;">
+      <p class="section-title">📊 난이도</p>
+      <p style="font-size:20px;font-weight:500;color:#1a1a2e;margin:0;">중급</p>
+    </div>
+    <div class="section" style="margin:0;text-align:center;">
+      <p class="section-title">🔧 필요 툴</p>
+      <p style="font-size:13px;font-weight:500;color:#1a1a2e;margin:0;">n8n, Browserless, Google AI Studio (Gemini), Discord</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-title">🛠 사전 준비</p>
+    <ul><li>**n8n 계정 또는 설치**: n8n 공식 웹사이트에서 가입하거나, 직접 컴퓨터에 설치해두어야 합니다. (쉽게 자동화 흐름을 만들 수 있는 도화지이자 연필이라고 생각하시면 됩니다.)</li><li>**Browserless 계정**: 웹사이트의 내용을 AI가 읽을 수 있도록 변환해주는 서비스입니다. (인터넷 신문을 AI가 읽기 좋게 바꿔주는 도우미라고 생각하시면 됩니다.)</li><li>**Google AI Studio (Gemini) API 키**: Google Gemini (구글에서 만든 AI 모델)를 사용하기 위한 '열쇠'입니다. (똑똑한 AI 비서에게 질문할 수 있는 허가증 같은 것입니다.)</li><li>**Discord 채널 (웹훅 또는 봇 계정)**: AI가 분석한 결과를 받아볼 디스코드 채팅 채널을 준비해야 합니다. (AI 비서가 저에게 보고서를 보내줄 우체통을 만드는 것이라고 생각하시면 됩니다.)</li></ul>
+  </div>
+
+  <div class="section">
+    <p class="section-title">📋 단계별 구현</p>
+    <div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#EEEDFE;color:#3C3489">1</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#EEEDFE;color:#3C3489">트리거</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">1단계: 자동화 시작 조건 설정하기 (트리거)</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">n8n 프로그램 화면을 열고, 왼쪽 위에 있는 '+' 버튼을 클릭하세요. 검색창에 'Chat'을 입력하고 'Chat Trigger' 노드 (n8n에서 하나의 작업 단계)를 선택합니다. 이 노드를 더블클릭해서 '이벤트'를 '새로운 메시지'로 설정해두면, 특정 채팅방에 메시지가 올 때마다 자동화가 시작됩니다. 예를 들어, 특정 명령어를 채팅방에 입력하면 AI 에이전트가 작동하도록 만들 수 있습니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 처음에는 '수동 실행'으로 설정하고 테스트하다가, 모든 설정이 완료되면 원하는 '자동 실행' 조건으로 바꾸는 것이 좋습니다. (실제로 작동하기 전에 미리 연습해보는 것과 같습니다.)</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#E6F1FB;color:#0C447C">2</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#E6F1FB;color:#0C447C">AI</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">2단계: AI 에이전트의 목표와 역할 정의하기 (AI 모델 연동)</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">트리거 노드 옆에 '+' 버튼을 눌러 'Google AI Gemini' 노드를 추가하세요. 이 노드를 선택하고, 발급받은 'Google AI API 키 (외부 서비스를 연결해주는 열쇠)'를 입력합니다. 여기서 AI 에이전트가 무엇을 해야 할지 구체적으로 지시하는 '프롬프트 (AI에게 내리는 명령문)'를 작성합니다. 예를 들어, '이 금융 뉴스를 분석하고 핵심 내용을 5줄로 요약해줘'와 같이 적는 것입니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 프롬프트는 최대한 명확하고 구체적으로 작성해야 AI가 원하는 답변을 잘 줄 수 있습니다. (애매하게 말하면 AI도 헷갈릴 수 있습니다.)</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#FAEEDA;color:#633806">3</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#FAEEDA;color:#633806">연동</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">3단계: 웹사이트에서 필요한 정보 가져오기 (Browserless 연동)</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">Google AI Gemini 노드 뒤에 '+' 버튼을 눌러 'Browserless' 노드를 추가합니다. 이 노드를 설정해서 AI 에이전트가 어떤 웹사이트 (예: 특정 금융 뉴스 사이트)에 접속해서 어떤 정보를 가져올지 알려줍니다. Browserless 계정 정보를 입력하고, 정보를 가져올 웹페이지의 주소(URL)를 입력하면 됩니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 웹사이트마다 구조가 다르므로, Browserless가 정확한 정보를 가져오도록 웹사이트 주소를 여러 번 테스트하며 조정해야 할 수 있습니다. (다른 디자인의 신문에서 원하는 기사만 찾는 연습이라고 생각하시면 됩니다.)</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#E6F1FB;color:#0C447C">4</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#E6F1FB;color:#0C447C">AI</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">4단계: 가져온 정보를 AI에게 분석 요청하기 (데이터 전달)</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">Browserless 노드와 Google AI Gemini 노드를 연결합니다. 이때 Browserless 노드에서 가져온 웹페이지 내용이 Google AI Gemini 노드의 프롬프트에 자동으로 전달되도록 설정해야 합니다. 예를 들어, Browserless가 가져온 '웹페이지 내용'을 Google AI Gemini 노드의 '입력 내용'으로 연결하면 됩니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 노드와 노드 사이를 연결할 때 어떤 정보가 다음 단계로 넘어가는지 잘 확인해야 합니다. (각각의 도우미가 바통터치할 때 제대로 된 물건을 건네주는지 확인하는 것과 같습니다.)</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#EAF3DE;color:#3B6D11">5</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#EAF3DE;color:#3B6D11">실행</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">5단계: AI 분석 결과 받아서 알림 보내기 (Discord 연동)</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">Google AI Gemini 노드 뒤에 '+' 버튼을 눌러 'Discord' 노드를 추가합니다. 여기에 미리 준비해둔 디스코드 '웹훅 (다른 서비스와 연결해주는 통로)' 주소를 입력하고, AI가 요약한 내용을 특정 채널로 보낼 수 있도록 설정합니다. AI의 분석 결과가 디스코드 채널에 메시지로 나타나게 됩니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 디스코드 웹훅 설정 시 채널 선택과 메시지 형식을 정확히 지정해야 오류 없이 알림을 받을 수 있습니다. (메시지가 어디로, 어떤 형태로 도착해야 할지 정확히 알려주는 것과 같습니다.)</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#F1EFE8;color:#5F5E5A">6</div>
+            
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#F1EFE8;color:#5F5E5A">테스트</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">6단계: 전체 자동화 흐름 저장하고 테스트하기 (워크플로우 테스트)</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">모든 노드를 연결하고 설정이 끝났으면, n8n 화면 오른쪽 위에 있는 '저장' 버튼을 눌러 만든 자동화 흐름을 저장합니다. 그 다음 '실행' 또는 '테스트' 버튼을 눌러 실제로 잘 작동하는지 확인합니다. 처음 설정한 트리거 (자동으로 시작되는 조건)에 맞춰 메시지를 보내보거나 수동으로 실행해보며 결과를 확인하세요.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 문제가 발생하면 '로그 (기록)'를 확인해서 어떤 단계에서 오류가 났는지 파악하고 수정해야 합니다. (실패해도 좌절하지 말고 기록을 보면서 원인을 찾아 고치는 것이 중요합니다.)</div>
+          </div>
+        </div></div>
+  </div>
+
+  <div class="section">
+    <p class="section-title">✅ 완성하면 이렇게 돼요</p>
+    <div class="result-box">이 가이드를 따라 완성하면, 특정 금융 뉴스 웹사이트에서 최신 기사를 자동으로 수집하고, Google Gemini AI가 그 내용을 분석하여 핵심을 5줄 내외로 요약한 후, 해당 요약본을 디스코드 채널에 자동으로 전송해주는 나만의 금융 AI 에이전트가 완성됩니다. 이제 매일 아침 직접 뉴스를 찾아보는 대신, AI가 보내준 요약 보고서만 확인하며 업무를 시작할 수 있게 됩니다.</div>
+  </div>
+
+  <div class="footer">
+    <p style="margin:0;">생성일: 2026년 04월 01일 · AI가 여러 원문을 분석해 작성한 통합 가이드</p>
+    <p style="margin:8px 0 4px;font-weight:500;color:#888;">참고한 원문</p>
+    <ul><li><a href="https://interviewkickstart.com/blogs/articles/building-financial-ai-agents-with-n8n" target="_blank" style="color:#185FA5;text-decoration:none;">n8n으로 금융 업무 자동화 AI 에이전트 만들기</a> <span style="font-size:11px;color:#aaa;margin-left:4px;">InterviewKickstart</span></li></ul>
+  </div>
+</body>
+</html>
