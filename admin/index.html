@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 다이제스트 어드민</title>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/tinacms@latest/dist/tinacms.js"></script>
+  <script>
+    TinaCMS.init({
+      clientId: "3265a106-4923-45e8-8ead-2c20ebbaac56",
+      branch: "main",
+      schema: {
+        collections: [
+          {
+            name: "post",
+            label: "가이드 글",
+            path: "",
+            format: "html",
+            fields: [
+              {
+                type: "image",
+                name: "thumbnail",
+                label: "썸네일 이미지",
+              },
+              {
+                type: "string",
+                name: "title",
+                label: "제목",
+              }
+            ],
+            match: {
+              include: "**/*-20[0-9][0-9]*"
+            }
+          }
+        ]
+      }
+    });
+  </script>
+</body>
+</html>
