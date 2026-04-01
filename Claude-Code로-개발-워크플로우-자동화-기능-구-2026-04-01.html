@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code로 개발 워크플로우 자동화 기능 구축</title>
+<style>
+  * { box-sizing: border-box; }
+  body { max-width: 740px; margin: 0 auto; padding: 24px 20px 60px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          color: #1a1a1a; background: #f7f7f5; }
+  .back { font-size: 13px; color: #888; text-decoration: none; display:inline-block; margin-bottom: 24px; }
+  .back:hover { color: #333; }
+  .header { background: #1a1a2e; border-radius: 14px; padding: 28px 28px 24px; margin-bottom: 28px; }
+  .header h1 { color: #fff; font-size: 20px; font-weight: 500; margin: 0 0 10px; line-height: 1.5; }
+  .header p { color: rgba(255,255,255,0.55); font-size: 13px; margin: 0; line-height: 1.7; }
+  .section { background: #fff; border-radius: 12px; border: 0.5px solid #e8e8e8; padding: 22px 24px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 600; color: #888; letter-spacing: 0.07em; text-transform: uppercase; margin: 0 0 14px; }
+  ul { padding-left: 18px; margin: 0; }
+  li { font-size: 13px; color: #444; line-height: 1.8; margin: 3px 0; }
+  .result-box { background: #f0f7ff; border-radius: 10px; padding: 14px 16px; font-size:13px; color:#1a4a7a; line-height:1.8; }
+  .footer { margin-top: 32px; padding-top: 20px; border-top: 0.5px solid #e0e0e0; font-size: 12px; color: #aaa; }
+  .footer a { color: #185FA5; text-decoration: none; }
+  .footer ul { list-style: none; padding: 0; margin: 10px 0 0; }
+  .footer li { margin: 5px 0; }
+</style>
+</head>
+<body>
+  <a class="back" href="index.html">← 목록으로</a>
+
+  <div class="header">
+    <h1>Claude Code로 개발 워크플로우 자동화 기능 구축</h1>
+    <p>이 가이드는 개발자가 반복적이고 지루한 작업에 시간을 낭비하는 문제를 해결하고, Claude Code를 활용하여 이러한 개발 워크플로우를 자동화하는 방법을 제시합니다. 결과적으로 개발자는 코드 리뷰, 테스트 작성, 문서 업데이트, 이슈 트리아징과 같은 반복 작업에서 벗어나 더 중요하고 흥미로운 코딩 문제 해결에 집중할 수 있게 됩니다.</p>
+  </div>
+
+  <div class="section">
+    <p class="section-title">🛠 필요한 것들</p>
+    <span style="display:inline-block;font-size:12px;padding:4px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">Claude Code CLI</span><span style="display:inline-block;font-size:12px;padding:4px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">Git</span><span style="display:inline-block;font-size:12px;padding:4px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">GitHub (또는 다른 Git 호스팅 서비스)</span><span style="display:inline-block;font-size:12px;padding:4px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">CI/CD 시스템 (예: GitHub Actions)</span><span style="display:inline-block;font-size:12px;padding:4px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">터미널/셸</span>
+    <ul style='margin-top:12px;'><li>기본적인 Git 및 GitHub 사용 경험</li><li>터미널 또는 명령줄 환경에 대한 이해</li><li>Claude Code CLI 설치 및 API 키 발급</li><li>개발 언어 및 프레임워크에 대한 이해</li></ul>
+  </div>
+
+  <div class="section">
+    <p class="section-title">📋 단계별 구현</p>
+    <div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#E1F5EE;color:#085041">1</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#E1F5EE;color:#085041">설정</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Claude Code CLI 설치 및 API 키 설정</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">터미널을 열고 `npm install -g claude-code-cli` (예시)와 같은 명령어를 입력하여 Claude Code CLI를 전역으로 설치합니다. 이후, Claude Code의 설정 파일을 찾아 (일반적으로 `~/.claude/config.json`) 발급받은 Claude API 키를 `CLAUDE_API_KEY=YOUR_KEY_HERE`와 같이 환경 변수로 설정하거나 설정 파일 내 `api_key` 필드에 입력하여 인증을 완료합니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 설치 명령어는 Claude Code의 공식 문서에서 확인해야 하며, API 키는 외부에 노출되지 않도록 환경 변수로 관리하는 것이 보안상 안전합니다.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#E6F1FB;color:#0C447C">2</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#E6F1FB;color:#0C447C">AI</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">CLAUDE.md 파일로 프로젝트 컨텍스트 정의</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">프로젝트의 루트 디렉토리에 `CLAUDE.md` 파일을 새로 생성합니다. 이 파일 안에 `# 코딩 표준: ESLint 규칙 준수`, `# 중요 파일 경로: src/components/, src/utils/`, `# 테스트 명령어: npm test -- --coverage` 등 AI가 프로젝트의 구조와 규칙, 팀의 작업 방식을 파악하는 데 필요한 핵심 정보를 마크다운 문법으로 상세히 기술합니다. 특정 함수나 모듈에 대한 심층적인 설명도 추가할 수 있습니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 `CLAUDE.md` 파일은 AI의 '프로젝트별 두뇌' 역할을 하므로, 구체적이고 명확하게 작성할수록 AI의 이해도가 높아집니다. 모호하거나 불완전한 정보는 AI가 잘못된 방향으로 작업을 수행하게 할 수 있습니다.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#E6F1FB;color:#0C447C">3</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#E6F1FB;color:#0C447C">AI</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Plan Mode를 활용한 작업 계획 수립 및 검토</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">수행하고자 하는 작업을 Claude Code에게 지시할 때, 먼저 'Plan Mode'로 실행하도록 명령합니다. 예를 들어, `claude code --plan '새로운 사용자 인증 기능을 구현하고 관련 테스트를 작성해줘'`와 같이 명령어를 입력하면, Claude는 실제 코드를 변경하기 전에 터미널에 상세한 구현 계획(예: 변경될 파일 목록, 추가될 함수 정의, 예상되는 테스트 케이스)을 출력합니다. 이 계획을 면밀히 확인하고 필요한 경우 AI에게 피드백하여 계획을 수정합니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 Plan Mode에서 제시된 전략을 충분히 검토하여 잠재적인 문제나 비효율적인 접근 방식을 초기에 발견하고, AI가 불필요한 작업을 수행하지 않도록 사전에 수정하는 것이 중요합니다.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#EEEDFE;color:#3C3489">4</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#EEEDFE;color:#3C3489">트리거</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">커스텀 슬래시 명령어로 반복 작업 자동화</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">Claude Code의 설정 파일이나 전용 스크립트 파일(예: `~/.claude/commands.yml`)을 편집하여 자주 반복되는 복잡한 작업을 하나의 간결한 슬래시 명령어로 정의합니다. 예를 들어, `/fix-issue <issue_number>` 명령어가 실행될 때 GitHub API를 통해 이슈 내용을 읽고, 관련 파일을 찾아 코드 수정 제안을 한 후, `npm test`를 실행하도록 일련의 액션을 스크립트로 구성하여 저장합니다. 이 명령어는 `claude /fix-issue 123`와 같이 터미널에서 호출할 수 있습니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 명령어의 범위와 인자를 명확히 정의하여 재사용성을 높이고, 각 단계별로 필요한 권한(예: GitHub API 토큰)이나 환경 설정이 올바른지 확인해야 합니다. 명령어의 실행 결과가 예상과 다를 경우 로그를 확인하여 디버깅합니다.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#E6F1FB;color:#0C447C">5</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#E6F1FB;color:#0C447C">AI</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Sub-agent를 통한 복잡한 작업 병렬 처리 (선택 사항)</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">매우 복잡하거나 다면적인 작업(예: '타사 API 연동과 함께 UI 컴포넌트 개발')을 Claude Code에게 지시할 때, Claude는 내부적으로 여러 '서브 에이전트'를 생성하여 각 에이전트에게 API 문서 분석, 초기 코드 스캐폴딩, 테스트 케이스 작성, UI 코드 구현 등의 세부 작업을 할당합니다. 개발자는 주 에이전트와 소통하며 각 서브 에이전트의 진행 상황을 모니터링하고 필요에 따라 추가 지시를 내릴 수 있습니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 서브 에이전트 간의 역할 분담을 명확히 하고, 각 에이전트가 처리할 작업의 범위를 한정하여 컨텍스트 충돌을 방지하고 효율성을 높이는 것이 중요합니다. 필요하다면 중간에 개입하여 방향을 제시해야 합니다.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#FAEEDA;color:#633806">6</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#FAEEDA;color:#633806">연동</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">Hooks를 활용한 실시간 액션 트리거 설정</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">Claude Code의 설정 파일에 `hooks` 섹션을 추가하여 특정 이벤트(`PreToolUse` (도구 사용 전), `PostToolUse` (도구 사용 후), `Stop` (작업 완료 시)) 발생 시 자동으로 실행될 스크립트를 정의합니다. 예를 들어, `PostToolUse` 훅에 `run-linter.sh` 스크립트를 연결하여 Claude가 파일을 수정한 직후 해당 파일에 대해 자동으로 린터(`eslint --fix <file_path>`)를 실행하도록 설정합니다. 이 설정은 `claude config edit` 명령어를 통해 접근할 수 있습니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 훅 스크립트는 가볍고 빠르게 실행되어야 하며, 오류 발생 시 전체 워크플로우를 중단시키지 않도록 예외 처리 로직을 포함해야 합니다. 훅 실행 결과는 Claude Code의 로그를 통해 확인할 수 있습니다.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#FAEEDA;color:#633806">7</div>
+            
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#FAEEDA;color:#633806">연동</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">CI/CD 파이프라인과 연동하여 자동화 확장</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">프로젝트의 `.github/workflows` 디렉토리에 새로운 YAML 파일을 생성하여 GitHub Actions와 같은 CI/CD 워크플로우를 정의합니다. 이 워크플로우에 Claude Code CLI 명령어를 포함시킵니다. 예를 들어, 풀 리퀘스트 생성 이벤트 발생 시 `claude /run-review <PR_NUMBER>`와 같은 커스텀 명령어를 실행하여 코드 리뷰나 자동 테스트를 트리거하도록 설정합니다. CI/CD 환경 변수를 사용하여 Claude API 키를 안전하게 전달합니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 CI/CD 환경에서 Claude Code가 필요한 인증 정보(API 키, Git 권한 등)에 안전하게 접근할 수 있도록 환경 변수 또는 시크릿 관리에 각별히 유의해야 합니다. 워크플로우 실행 실패 시 CI/CD 로그를 면밀히 분석해야 합니다.</div>
+          </div>
+        </div></div>
+  </div>
+
+  <div class="section">
+    <p class="section-title">✅ 완성 후 결과</p>
+    <div class="result-box">이 가이드를 통해 Claude Code를 개발 워크플로우에 성공적으로 통합하면, 개발자의 반복적인 작업을 자동화하여 코드 리뷰, 테스트 작성, 문서 업데이트, 이슈 트리아징 등에 소요되는 시간을 획기적으로 절약할 수 있습니다. 결과적으로 개발자는 핵심적인 코딩 문제 해결과 새로운 기능 개발에 집중할 수 있게 되며, 팀 전체적으로 일관된 개발 프로세스를 유지하고 생산성을 향상시키는 효과를 얻을 수 있습니다.</div>
+  </div>
+
+  <div class="footer">
+    <p style="margin:0;">생성일: 2026년 04월 01일 · AI가 여러 원문을 분석해 작성한 통합 가이드</p>
+    <p style="margin:8px 0 4px;font-weight:500;color:#888;">참고한 원문</p>
+    <ul><li><a href="https://www.datacamp.com/tutorial/claude-code-hooks" target="_blank" style="color:#185FA5;text-decoration:none;">Claude Code Hooks로 개발 워크플로우 자동화하기</a> <span style="font-size:11px;color:#aaa;margin-left:4px;">DataCamp</span></li><li><a href="https://www.eesel.ai/blog/claude-code-workflow-automation" target="_blank" style="color:#185FA5;text-decoration:none;">Claude Code로 개발 업무 자동화 실전 가이드 2025</a> <span style="font-size:11px;color:#aaa;margin-left:4px;">Eesel</span></li><li><a href="https://henriquesd.medium.com/claude-code-a-practical-guide-to-automating-your-development-workflow-675714db08ed" target="_blank" style="color:#185FA5;text-decoration:none;">Claude Code 실무 가이드 — 개발 워크플로우 자동화</a> <span style="font-size:11px;color:#aaa;margin-left:4px;">Medium</span></li></ul>
+  </div>
+</body>
+</html>

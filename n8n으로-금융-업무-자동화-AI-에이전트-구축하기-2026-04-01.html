@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>n8n으로 금융 업무 자동화 AI 에이전트 구축하기</title>
+<style>
+  * { box-sizing: border-box; }
+  body { max-width: 740px; margin: 0 auto; padding: 24px 20px 60px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          color: #1a1a1a; background: #f7f7f5; }
+  .back { font-size: 13px; color: #888; text-decoration: none; display:inline-block; margin-bottom: 24px; }
+  .back:hover { color: #333; }
+  .header { background: #1a1a2e; border-radius: 14px; padding: 28px 28px 24px; margin-bottom: 28px; }
+  .header h1 { color: #fff; font-size: 20px; font-weight: 500; margin: 0 0 10px; line-height: 1.5; }
+  .header p { color: rgba(255,255,255,0.55); font-size: 13px; margin: 0; line-height: 1.7; }
+  .section { background: #fff; border-radius: 12px; border: 0.5px solid #e8e8e8; padding: 22px 24px; margin-bottom: 16px; }
+  .section-title { font-size: 11px; font-weight: 600; color: #888; letter-spacing: 0.07em; text-transform: uppercase; margin: 0 0 14px; }
+  ul { padding-left: 18px; margin: 0; }
+  li { font-size: 13px; color: #444; line-height: 1.8; margin: 3px 0; }
+  .result-box { background: #f0f7ff; border-radius: 10px; padding: 14px 16px; font-size:13px; color:#1a4a7a; line-height:1.8; }
+  .footer { margin-top: 32px; padding-top: 20px; border-top: 0.5px solid #e0e0e0; font-size: 12px; color: #aaa; }
+  .footer a { color: #185FA5; text-decoration: none; }
+  .footer ul { list-style: none; padding: 0; margin: 10px 0 0; }
+  .footer li { margin: 5px 0; }
+</style>
+</head>
+<body>
+  <a class="back" href="index.html">← 목록으로</a>
+
+  <div class="header">
+    <h1>n8n으로 금융 업무 자동화 AI 에이전트 구축하기</h1>
+    <p>이 가이드는 n8n을 활용하여 금융 업무를 자동화하는 AI 에이전트를 단계별로 구축하는 방법을 설명합니다. 이를 통해 데이터 분석, 사기 감지, 포트폴리오 관리 등 복잡한 금융 프로세스를 효율적으로 자동화하고 운영 비용을 절감할 수 있습니다.</p>
+  </div>
+
+  <div class="section">
+    <p class="section-title">🛠 필요한 것들</p>
+    <span style="display:inline-block;font-size:12px;padding:4px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">n8n</span><span style="display:inline-block;font-size:12px;padding:4px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">Browserless</span><span style="display:inline-block;font-size:12px;padding:4px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">Google AI (Gemini)</span><span style="display:inline-block;font-size:12px;padding:4px 12px;border-radius:20px;background:#f0f0f0;color:#444;margin:3px 4px 3px 0;">Discord</span>
+    <ul style='margin-top:12px;'><li>n8n 인스턴스 (클라우드 계정 또는 Docker를 이용한 자체 호스팅)</li><li>Browserless 인스턴스 (웹 스크래핑용, 클라우드 또는 자체 호스팅)</li><li>Google AI API Key (Google Gemini 사용을 위함)</li><li>Discord 웹훅 또는 봇 계정 (알림 발송용)</li></ul>
+  </div>
+
+  <div class="section">
+    <p class="section-title">📋 단계별 구현</p>
+    <div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#EEEDFE;color:#3C3489">1</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#EEEDFE;color:#3C3489">트리거</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">워크플로우 트리거 설정</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">n8n 캔버스에서 '+' 버튼을 클릭하여 새 노드를 추가하고, AI 에이전트와 상호 작용할 방식에 맞는 트리거를 선택합니다. 예를 들어, 채팅 인터페이스를 통해 URL이 포함된 메시지가 전송될 때 워크플로우를 시작하려면 'Chat' 트리거 노드를 선택하여 설정합니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 에이전트의 목적에 따라 HTTP 웹훅, 스케줄러, 특정 애플리케이션 트리거 등 다양한 트리거를 선택할 수 있습니다. 가장 적절한 시작점을 고려하세요.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#E6F1FB;color:#0C447C">2</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#E6F1FB;color:#0C447C">AI</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">AI 에이전트의 핵심(LLM) 구성</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">워크플로우에 AI 모델 노드를 추가하여 에이전트의 핵심 기능을 설정합니다. Google AI Studio에서 발급받은 API 키를 입력하여 Google Gemini와 같은 LLM을 연동하고, 에이전트가 금융 데이터를 이해하고 추론할 수 있도록 초기 프롬프트와 역할을 정의합니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 LLM 설정 시 API 키를 안전하게 관리하고, 에이전트의 금융 업무 특성에 맞게 프롬프트를 명확하고 구체적으로 작성해야 합니다.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#FAEEDA;color:#633806">3</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#FAEEDA;color:#633806">연동</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">웹 스크래핑 도구(Browserless) 연동</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">웹 스크래핑을 위해 Browserless 노드를 워크플로우에 추가하고 Browserless 인스턴스에 연결합니다. 이를 통해 에이전트가 특정 금융 웹사이트나 문서에서 필요한 데이터를 추출할 수 있도록 설정합니다. 예를 들어, 금융 보고서나 시장 데이터를 주기적으로 수집할 수 있습니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 Browserless는 Docker로 자체 호스팅하거나 클라우드 서비스를 이용할 수 있습니다. 웹 스크래핑 시 대상 웹사이트의 이용 약관을 준수하고, 필요한 경우 VPN 사용을 고려하세요.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#E1F5EE;color:#085041">4</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#E1F5EE;color:#085041">설정</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">데이터 처리 및 에이전트 로직 정의</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">수집된 데이터를 LLM에 전달하기 전 필요한 전처리 단계를 구성합니다. 'Code' 노드나 'Function' 노드를 사용하여 데이터 형식 변경, 필터링, 요약 등을 수행합니다. 에이전트가 특정 조건을 기반으로 의사결정을 내리거나 다음 단계를 수행하도록 명확한 로직을 정의합니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 데이터 보안에 유의하며 민감한 금융 정보는 마스킹하거나 암호화하는 방법을 고려해야 합니다. 복잡한 로직은 작은 단위로 나누어 단계별로 구현하는 것이 좋습니다.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#FAEEDA;color:#633806">5</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#FAEEDA;color:#633806">연동</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">알림 및 출력 도구(Discord) 연동</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">에이전트가 특정 작업을 완료하거나 중요한 정보를 발견했을 때 알림을 보낼 수 있도록 Discord 웹훅 또는 봇 계정을 n8n 워크플로우에 연동합니다. 'Discord' 노드를 추가하고 웹훅 URL을 설정하여 연구 결과, 사기 탐지 알림 등을 자동으로 전송하도록 구성합니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 Discord 외에도 Slack, Email, Notion 등 다양한 알림 및 저장 도구를 연동할 수 있습니다. 팀의 업무 흐름에 맞는 최적의 채널을 선택하세요.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#E1F5EE;color:#085041">6</div>
+            <div style="width:2px;flex:1;min-height:24px;background:#e0e0e0;margin:4px 0;"></div>
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#E1F5EE;color:#085041">설정</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">에이전트 목표 및 시나리오 검토</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">에이전트가 수행해야 할 최종 목표(예: 사기 탐지, 포트폴리오 분석, 고객 응대)를 명확히 정의하고, 실제 금융 업무 시나리오에서 어떻게 작동할지 전반적인 흐름을 다시 한번 검토합니다. 정의된 로직이 목표에 부합하는지 확인하고 필요한 경우 수정합니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 에이전트의 목표가 너무 광범위하면 성능이 저하될 수 있으므로, 초기에는 구체적이고 한정된 목표를 설정하는 것이 효율적입니다.</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;background:#F1EFE8;color:#5F5E5A">7</div>
+            
+          </div>
+          <div style="flex:1;border:0.5px solid #e8e8e8;border-radius:10px;padding:16px 18px;margin-bottom:4px;background:#fff;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:11px;padding:2px 8px;border-radius:12px;font-weight:600;background:#F1EFE8;color:#5F5E5A">테스트</span>
+              <span style="font-size:15px;font-weight:500;color:#1a1a1a;">워크플로우 테스트 및 배포</span>
+            </div>
+            <p style="font-size:13px;color:#444;margin:0;line-height:1.8;">구축된 n8n 워크플로우를 다양한 시나리오와 데이터로 철저히 테스트하여 예상대로 작동하는지 확인합니다. 특히 금융 데이터의 정확성과 보안에 중점을 둡니다. 테스트가 완료되면 워크플로우를 활성화하여 실제 금융 업무에 자동화된 AI 에이전트를 배포합니다.</p>
+            <div style="margin-top:10px;padding:10px 12px;background:#fffbf0;border-left:3px solid #f0c040;border-radius:0 6px 6px 0;font-size:12px;color:#7a6000;line-height:1.7;">💡 규제 준수(GDPR, CCPA 등)를 항상 고려하고, AI의 과도한 의존을 피하며 인간의 감독을 유지하는 것이 중요합니다. 주기적인 성능 모니터링 및 업데이트 계획을 수립하세요.</div>
+          </div>
+        </div></div>
+  </div>
+
+  <div class="section">
+    <p class="section-title">✅ 완성 후 결과</p>
+    <div class="result-box">이 가이드를 통해 n8n 기반의 금융 AI 에이전트를 구축하여 특정 트리거에 반응하고, LLM을 활용해 금융 데이터를 분석하며, Browserless를 통해 웹 스크래핑을 수행하고, Discord로 결과를 알리는 일련의 자동화된 금융 업무 처리 시스템을 갖추게 됩니다.</div>
+  </div>
+
+  <div class="footer">
+    <p style="margin:0;">생성일: 2026년 04월 01일 · AI가 여러 원문을 분석해 작성한 통합 가이드</p>
+    <p style="margin:8px 0 4px;font-weight:500;color:#888;">참고한 원문</p>
+    <ul><li><a href="https://interviewkickstart.com/blogs/articles/building-financial-ai-agents-with-n8n" target="_blank" style="color:#185FA5;text-decoration:none;">n8n으로 금융 업무 자동화 AI 에이전트 만들기</a> <span style="font-size:11px;color:#aaa;margin-left:4px;">InterviewKickstart</span></li></ul>
+  </div>
+</body>
+</html>
