@@ -5,41 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>나의 AI 실무 가이드</title>
 <style>
-  body { max-width: 720px; margin: 0 auto; padding: 24px 20px;
-          font-family: -apple-system, sans-serif; background: #fafafa; }
-  .header { background: #1a1a2e; border-radius: 12px; padding: 24px 28px;
-             margin-bottom: 28px; }
-  .header h1 { color: #fff; font-size: 20px; font-weight: 500; margin: 0 0 4px; }
-  .header p { color: rgba(255,255,255,0.5); font-size: 12px; margin: 0; }
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
-  .card { display: block; background: #fff; border: 0.5px solid #e8e8e8;
-           border-radius: 12px; padding: 20px; text-decoration: none; color: inherit;
-           transition: border-color 0.15s; }
-  .card:hover { border-color: #999; }
-  .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-  .card-tag { font-size: 11px; font-weight: 600; color: #3C3489;
-               background: #EEEDFE; padding: 2px 8px; border-radius: 12px; }
-  .card-sources { font-size: 11px; color: #bbb; }
-  .card-title { font-size: 14px; font-weight: 500; margin: 0 0 10px;
-                 color: #1a1a1a; line-height: 1.5; }
-  .card-meta { font-size: 12px; color: #bbb; margin: 0; }
-  .updated { font-size: 12px; color: #aaa; text-align: center;
-              margin-top: 32px; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          background: #f7f7f5; color: #1a1a1a; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 32px 20px 80px; }
+  .site-header { display: flex; align-items: center; justify-content: space-between;
+                  margin-bottom: 40px; }
+  .site-title { font-size: 18px; font-weight: 600; color: #1a1a2e; }
+  .site-sub { font-size: 12px; color: #aaa; margin-top: 2px; }
+  .section-label { font-size: 11px; font-weight: 600; color: #aaa;
+                    letter-spacing: 0.08em; text-transform: uppercase;
+                    margin-bottom: 16px; }
+  .updated { text-align: center; font-size: 12px; color: #ccc; margin-top: 48px; }
 </style>
 </head>
 <body>
-  <div class="header">
-    <h1>🤖 나의 AI 실무 가이드</h1>
-    <p>매주 금요일 자동 업데이트 · AI가 여러 원문을 분석해 작성</p>
+<div class="wrap">
+  <div class="site-header">
+    <div>
+      <p class="site-title">🤖 나의 AI 실무 가이드</p>
+      <p class="site-sub">매주 금요일 자동 업데이트 · AI가 여러 원문을 분석해 작성</p>
+    </div>
   </div>
-  <div class="cards"><a class="card" href="테스트-n8n으로-이메일-자동-분류하기-2026-04-01.html">
-          <div class="card-top">
-            <span class="card-tag">에이전트</span>
-            <span class="card-sources">원문 3개 통합</span>
+
+  <p class="section-label">최신 가이드</p>
+        <a href="테스트-n8n으로-이메일-자동-분류하기-2026-04-01.html" style="text-decoration:none;color:inherit;">
+          <div style="background:#F0FDF8;border:0.5px solid #e8e8e8;border-radius:16px;
+                      overflow:hidden;display:grid;grid-template-columns:1fr 1fr;margin-bottom:40px;
+                      transition:box-shadow 0.15s;"
+               onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,0.08)'"
+               onmouseout="this.style.boxShadow='none'">
+            <div style="background:#E1F5EE;display:flex;align-items:center;
+                        justify-content:center;font-size:80px;padding:40px;">
+              🤖
+            </div>
+            <div style="padding:32px 28px;display:flex;flex-direction:column;justify-content:center;">
+              <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;
+                           background:#E1F5EE;color:#085041;
+                           display:inline-block;margin-bottom:14px;width:fit-content;">
+                ✨ 최신 글 · 에이전트
+              </span>
+              <p style="font-size:20px;font-weight:600;color:#1a1a1a;margin:0 0 12px;line-height:1.5;">
+                테스트: n8n으로 이메일 자동 분류하기
+              </p>
+              <p style="font-size:13px;color:#888;margin:0 0 20px;">2026-04-01</p>
+              <span style="font-size:13px;color:#1a1a2e;font-weight:500;">읽어보기 →</span>
+            </div>
           </div>
-          <p class="card-title">테스트: n8n으로 이메일 자동 분류하기</p>
-          <p class="card-meta">2026-04-01</p>
-        </a></div>
+        </a>
+  
+
   <p class="updated">마지막 업데이트: 2026년 04월 01일</p>
+</div>
 </body>
 </html>
